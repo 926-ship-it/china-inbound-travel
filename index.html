@@ -9335,8 +9335,7 @@ Object.assign(window, { DigitalHumanAdvisor, DigitalAvatar });
 function App() {
   useScrollReveal();
 
-  const scrollTo = (id) => (e) => {
-    if (e) e.preventDefault();
+  const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
