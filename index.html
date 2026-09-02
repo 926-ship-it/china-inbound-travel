@@ -8217,196 +8217,44 @@ Object.assign(window, { Icon });
 
   </script>
   <script type="text/babel">
-// Navbar.jsx — Desktop nav with dropdowns + mobile hamburger
-
+// Navbar.jsx — Minimal navbar: logo + language toggle + CTA
 function Navbar({ onNavigate, currentRoute }) {
   const { lang, toggleLang, t } = useLang();
   const [scrolled, setScrolled] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  // Prevent body scroll when mobile menu open
-  React.useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
-
   const nav = t.nav;
-
   const go = (path) => (e) => {
     e.preventDefault();
-    setMobileOpen(false);
     if (onNavigate) onNavigate(path);
   };
-
-  const dropdownItems = {
-    flights: [
-      { icon: 'Plane', title: nav.domesticRoutes, desc: nav.domesticRoutesDesc, href: '#flights' },
-      { icon: 'Globe', title: nav.globalRoutes, desc: nav.globalRoutesDesc, href: '#flights' },
-    ],
-    travel: [
-      { icon: 'Compass', title: nav.customTours, desc: nav.customToursDesc, href: '#travel' },
-      { icon: 'User', title: nav.tourGuide, desc: nav.tourGuideDesc, href: '#travel' },
-      { icon: 'Ticket', title: nav.attractions, desc: nav.attractionsDesc, href: '#travel' },
-      { icon: 'Hotel', title: nav.hotels, desc: nav.hotelsDesc, href: '#travel' },
-      { icon: 'Popcorn', title: nav.localDeals, desc: nav.localDealsDesc, href: '#travel' },
-    ],
-    shop: [
-      { icon: 'ShoppingBag', title: nav.chinaShopping, desc: nav.chinaShoppingDesc, href: '#shop' },
-      { icon: 'Diamond', title: nav.premiumDeals, desc: nav.premiumDealsDesc, href: '#shop' },
-    ],
-    medical: [
-      { icon: 'Heart', title: nav.massage, desc: nav.massageDesc, href: '#medical' },
-      { icon: 'Droplet', title: nav.weightLoss, desc: nav.weightLossDesc, href: '#medical' },
-      { icon: 'Acupuncture', title: nav.acupuncture, desc: nav.acupunctureDesc, href: '#medical' },
-      { icon: 'Scissors', title: nav.hairTransplant, desc: nav.hairTransplantDesc, href: '#medical' },
-      { icon: 'Sparkles', title: nav.lightAesthetics, desc: nav.lightAestheticsDesc, href: '#medical' },
-    ],
-  };
-
-  const renderIcon = (name, size = 18) => {
-    const IconComp = Icon[name];
-    return IconComp ? React.createElement(IconComp, { size }) : null;
-  };
-
-  const NavItem = ({ label, items, align = 'center', routePath }) => (
-    <li className="nav-item">
-      <a
-        className="nav-link"
-        href={routePath ? `#${routePath}` : `#${label.toLowerCase()}`}
-        onClick={routePath ? go(routePath) : undefined}
-      >
-        {label}
-        <Icon.ChevronDown size={12} />
+  return (
+    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      {/* Logo */}
+      <a href="#" className="nav-logo">
+        <span className="nav-logo-mark">
+          <Icon.LogoMark size={18} />
+        </span>
+        VisitChina
       </a>
-      <div className="dropdown">
-        {items.map((item, idx) => (
-          <a
-            key={idx}
-            className="dropdown-item"
-            href={item.href || '#'}
-            onClick={item.href ? (e) => { if (onNavigate) { e.preventDefault(); onNavigate(item.href.replace('#', '')); } } : undefined}
-          >
-            <div className="dropdown-item-icon">{renderIcon(item.icon)}</div>
-            <div className="dropdown-item-text">
-              <h4>{item.title}</h4>
-              <p>{item.desc}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </li>
-  );
-
-  return (
-    <>
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-        {/* Logo */}
-        <a href="#" className="nav-logo">
-          <span className="nav-logo-mark">
-            <Icon.LogoMark size={18} />
-          </span>
-          VisitChina
+      {/* Right side */}
+      <div className="nav-right">
+        <button className="lang-toggle" onClick={toggleLang} aria-label="Toggle language">
+          <span className={`lang-option ${lang === 'en' ? 'active' : ''}`}>EN</span>
+          <span className="lang-sep"></span>
+          <span className={`lang-option ${lang === 'zh' ? 'active' : ''}`}>中文</span>
+        </button>
+        <a href="#flights" className="btn btn-primary btn-sm" onClick={go('flights')}>
+          {nav.startPlanning}
         </a>
-
-        {/* Desktop menu */}
-        <ul className="nav-menu">
-          <NavItem label={nav.flightDeals} items={dropdownItems.flights} routePath="flights" />
-          <NavItem label={nav.travelChina} items={dropdownItems.travel} />
-          <NavItem label={nav.shopChina} items={dropdownItems.shop} />
-          <NavItem label={nav.medicalChina} items={dropdownItems.medical} />
-          <li className="nav-item">
-            <a className="nav-link" href="#visa" onClick={go('visa')}>{nav.visaFree}</a>
-          </li>
-        </ul>
-
-        {/* Right side */}
-        <div className="nav-right">
-          <button className="lang-toggle" onClick={toggleLang} aria-label="Toggle language">
-            <span className={`lang-option ${lang === 'en' ? 'active' : ''}`}>EN</span>
-            <span className="lang-sep"></span>
-            <span className={`lang-option ${lang === 'zh' ? 'active' : ''}`}>中文</span>
-          </button>
-          <a href="#flights" className="btn btn-primary btn-sm" onClick={go('flights')}>
-            {nav.startPlanning}
-          </a>
-          <button
-            className={`hamburger ${mobileOpen ? 'open' : ''}`}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile menu */}
-      <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
-        <MobileNavGroup label={nav.flightDeals} items={dropdownItems.flights} onClose={() => setMobileOpen(false)} />
-        <MobileNavGroup label={nav.travelChina} items={dropdownItems.travel} onClose={() => setMobileOpen(false)} />
-        <MobileNavGroup label={nav.shopChina} items={dropdownItems.shop} onClose={() => setMobileOpen(false)} />
-        <MobileNavGroup label={nav.medicalChina} items={dropdownItems.medical} onClose={() => setMobileOpen(false)} />
-
-        <div className="mobile-nav-group">
-          <div className="mobile-nav-label">{nav.visaFree}</div>
-          <a className="mobile-nav-item" href="#visa" onClick={go('visa')}>
-            <div className="mobile-nav-item-icon"><Icon.Clock size={16} /></div>
-            <span>{nav.visaFree}</span>
-          </a>
-        </div>
-
-        <div style={{ paddingTop: '24px', display: 'flex', gap: '12px' }}>
-          <button
-            className="btn btn-primary"
-            style={{ flex: 1 }}
-            onClick={go('flights')}
-          >
-            {nav.startPlanning}
-          </button>
-        </div>
       </div>
-    </>
+    </nav>
   );
 }
-
-function MobileNavGroup({ label, items, onClose }) {
-  return (
-    <div className="mobile-nav-group">
-      <div className="mobile-nav-label">{label}</div>
-      {items.map((item, idx) => {
-        const IconComp = Icon[item.icon];
-        const handleClick = (e) => {
-          if (item.action) {
-            item.action(e);
-          } else if (item.href) {
-            e.preventDefault();
-            const id = item.href.replace('#', '');
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-          if (onClose) onClose();
-        };
-        return (
-          <a key={idx} className="mobile-nav-item" href={item.href || '#'} onClick={handleClick}>
-            <div className="mobile-nav-item-icon">
-              {IconComp ? React.createElement(IconComp, { size: 16 }) : null}
-            </div>
-            <span>{item.title}</span>
-          </a>
-        );
-      })}
-    </div>
-  );
-}
-
 Object.assign(window, { Navbar });
 
   </script>
