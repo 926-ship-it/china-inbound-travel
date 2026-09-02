@@ -8248,7 +8248,7 @@ function Navbar({ onNavigate, currentRoute }) {
           <span className="lang-sep"></span>
           <span className={`lang-option ${lang === 'zh' ? 'active' : ''}`}>中文</span>
         </button>
-        <a href="#flights" className="btn btn-primary btn-sm" onClick={go('flights')}>
+        <a href="#contact" className="btn btn-primary btn-sm" onClick={go('contact')}>
           {nav.startPlanning}
         </a>
       </div>
@@ -8268,7 +8268,7 @@ function Hero({ onNavigate }) {
   const h = t.hero;
 
   const goPlanning = (e) => { e.preventDefault(); if (onNavigate) onNavigate('contact'); };
-  const goFlights = (e) => { e.preventDefault(); if (onNavigate) onNavigate('flights'); };
+  const goFlights = (e) => { e.preventDefault(); if (onNavigate) onNavigate('contact'); };
 
   return (
     <section className="hero">
@@ -8286,7 +8286,7 @@ function Hero({ onNavigate }) {
         <p className="hero-subtitle">{h.subtitle}</p>
         <div className="hero-ctas">
           <a href="#contact" className="btn btn-primary btn-lg" onClick={goPlanning}>{h.primaryCta}</a>
-          <a href="#flights" className="btn btn-outline btn-lg" onClick={goFlights}>{h.secondaryCta}</a>
+          <a href="#contact" className="btn btn-outline btn-lg" onClick={goFlights}>{h.secondaryCta}</a>
         </div>
       </div>
 
@@ -8878,7 +8878,7 @@ function Footer() {
   const { t } = useLang();
   const f = t.footer;
   return (
-    <footer className="footer">
+    <footer id="contact" className="footer">
       <div className="container">
         <div style={{
           display: 'flex',
