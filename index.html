@@ -8429,17 +8429,11 @@ function FlightDeals({ onNavigate }) {
                     {formatOriginal(flight.original, flight.originalZh)}
                   </span>
                 </div>
-                <button className="btn btn-primary btn-sm">{f.bookNow}</button>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="view-all-link reveal">
-          <a href="#flights" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('flights'); }}>
-            {f.viewAll} <Icon.ArrowRight size={14} />
-          </a>
-        </div>
       </div>
     </section>
   );
@@ -8520,9 +8514,6 @@ function TravelChina() {
               </div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-              <span className="explore-link">
-                {tr.explore} →
-              </span>
             </a>
             );
           })}
@@ -8576,9 +8567,6 @@ function ShopChina() {
                   <span key={i} className="shop-feature-chip">{feat}</span>
                 ))}
               </div>
-              <button className="btn btn-gold btn-sm">
-                {s.shopNow} <Icon.ArrowRight size={14} />
-              </button>
             </div>
           </a>
 
@@ -8597,9 +8585,6 @@ function ShopChina() {
                   <span key={i} className="shop-feature-chip">{feat}</span>
                 ))}
               </div>
-              <button className="btn btn-gold btn-sm">
-                {s.shopNow} <Icon.ArrowRight size={14} />
-              </button>
             </div>
           </a>
         </div>
@@ -8697,7 +8682,6 @@ function MedicalChina() {
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
               <div className="medical-price">{s.price}</div>
-              <button className="book-btn">{m.bookConsultation}</button>
             </div>
             );
           })}
@@ -8738,9 +8722,6 @@ function VisaFree({ onNavigate }) {
               </div>
             </div>
 
-            <a href="#contact" className="btn btn-gold" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('contact'); }}>
-              {v.learnMore} <Icon.ArrowRight size={14} />
-            </a>
           </div>
 
           {/* Right: passport card */}
