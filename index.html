@@ -9044,206 +9044,58 @@ Object.assign(window, { Testimonials });
 
   </script>
   <script type="text/babel">
-// Social.jsx — Social media / Chinamaxxing section
-
-function Social() {
-  const { t } = useLang();
-  const s = t.social;
-
-  const socials = [
-    { icon: 'Tiktok', label: 'TikTok' },
-    { icon: 'Instagram', label: 'Instagram' },
-    { icon: 'Youtube', label: 'YouTube' },
-    { icon: 'Xiaohongshu', label: '小红书' },
-    { icon: 'Facebook', label: 'Facebook' },
-  ];
-
-  return (
-    <section className="social-section">
-      <div className="container">
-        <div className="social-content reveal">
-          <h2 className="text-indigo">{s.title}</h2>
-          <p>{s.subtitle}</p>
-          <div className="social-icons">
-            {socials.map((sc, i) => {
-              const IconComp = Icon[sc.icon];
-              return (
-              <div
-                key={i}
-                className="social-icon"
-                title={sc.label}
-                style={{ transitionDelay: `${i * 0.08}s` }}
-              >
-                {IconComp ? React.createElement(IconComp, { size: 20 }) : null}
-              </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-Object.assign(window, { Social });
-
-  </script>
-  <script type="text/babel">
-// Footer.jsx — Multi-column footer with newsletter
-
+// Footer.jsx — Minimal footer: brand + contact + copyright
 function Footer() {
   const { t } = useLang();
   const f = t.footer;
-
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-grid">
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '40px',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          paddingBottom: '32px',
+          borderBottom: '1px solid rgba(201, 169, 97, 0.15)',
+        }}>
           {/* Brand */}
-          <div className="footer-brand">
-            <h3>
+          <div style={{ flex: '1 1 280px', minWidth: 0 }}>
+            <h3 style={{ margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ color: 'var(--warm-gold-light)' }}>
                 <Icon.LogoMark size={24} />
               </span>
               VisitChina
             </h3>
-            <p>{f.tagline}</p>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <a href="#" style={{
-                width: '36px', height: '36px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: '50%',
-                background: 'rgba(250, 246, 238, 0.1)',
-                color: 'var(--ivory)',
-                transition: 'all 0.2s ease',
-              }}>
-                <Icon.Tiktok size={16} />
-              </a>
-              <a href="#" style={{
-                width: '36px', height: '36px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: '50%',
-                background: 'rgba(250, 246, 238, 0.1)',
-                color: 'var(--ivory)',
-                transition: 'all 0.2s ease',
-              }}>
-                <Icon.Instagram size={16} />
-              </a>
-              <a href="#" style={{
-                width: '36px', height: '36px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: '50%',
-                background: 'rgba(250, 246, 238, 0.1)',
-                color: 'var(--ivory)',
-                transition: 'all 0.2s ease',
-              }}>
-                <Icon.Youtube size={16} />
-              </a>
-            </div>
-          </div>
-
-          {/* Flights & Travel */}
-          <div className="footer-col">
-            <h4>{f.flights}</h4>
-            <ul>
-              <li><a href="#domestic">{t.nav.domesticRoutes}</a></li>
-              <li><a href="#global">{t.nav.globalRoutes}</a></li>
-              <li><a href="#deals">Last-Minute Deals</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>{f.travel}</h4>
-            <ul>
-              <li><a href="#custom">{t.nav.customTours}</a></li>
-              <li><a href="#guide">{t.nav.tourGuide}</a></li>
-              <li><a href="#attractions">{t.nav.attractions}</a></li>
-              <li><a href="#hotels">{t.nav.hotels}</a></li>
-              <li><a href="#local">{t.nav.localDeals}</a></li>
-            </ul>
-          </div>
-
-          {/* Shop & Medical */}
-          <div className="footer-col">
-            <h4>{f.shop} & {f.medical}</h4>
-            <ul>
-              <li><a href="#china-shop">{t.nav.chinaShopping}</a></li>
-              <li><a href="#premium">{t.nav.premiumDeals}</a></li>
-              <li><a href="#massage">{t.nav.massage}</a></li>
-              <li><a href="#aesthetics">{t.nav.lightAesthetics}</a></li>
-              <li><a href="#medical-all">{t.nav.medicalChina}</a></li>
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="footer-col newsletter">
-            <h4>{f.newsletterTitle}</h4>
-            <p>{f.newsletterDesc}</p>
-            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder={f.newsletterPlaceholder} />
-              <button type="submit">{f.subscribe}</button>
-            </form>
-          </div>
-        </div>
-
-        {/* Destinations & Policies row */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '32px',
-          paddingBottom: '32px',
-          borderBottom: '1px solid rgba(201, 169, 97, 0.15)',
-        }}>
-          <div className="footer-col">
-            <h4>{f.destinations}</h4>
-            <ul>
-              <li><a href="#beijing">{f.beijing}</a></li>
-              <li><a href="#shanghai">{f.shanghai}</a></li>
-              <li><a href="#chengdu">{f.chengdu}</a></li>
-              <li><a href="#guangzhou">{f.guangzhou}</a></li>
-              <li><a href="#hangzhou">{f.hangzhou}</a></li>
-              <li><a href="#xian">{f.xian}</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>{f.policies}</h4>
-            <ul>
-              <li><a href="#visa-guide">{f.visaGuide}</a></li>
-              <li><a href="#tax-refund">{f.taxRefund}</a></li>
-              <li><a href="#faq">{f.faq}</a></li>
-              <li><a href="#about">{f.aboutUs}</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>{f.support}</h4>
-            <ul>
-              <li><a href="#contact">{f.contactUs}</a></li>
-              <li><a href="#help">Help Center</a></li>
-              <li><a href="#payment">Payment Methods</a></li>
-            </ul>
+            <p style={{ margin: 0, fontSize: '14px', color: 'rgba(250,246,238,0.6)', lineHeight: 1.7, maxWidth: '360px' }}>
+              {f.tagline}
+            </p>
           </div>
           {/* Contact */}
-          <div className="footer-col">
-            <h4>{f.contactUs}</h4>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ flex: '0 0 auto', minWidth: '240px' }}>
+            <h4 style={{ margin: '0 0 16px', fontSize: '14px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--warm-gold-light)' }}>
+              {f.contactUs}
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <li>
-                <a href="mailto:betty@influcity.net" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <a href="mailto:betty@influcity.net" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--ivory)', textDecoration: 'none', fontSize: '14px' }}>
                   <Icon.Mail size={16} /> betty@influcity.net
                 </a>
               </li>
-              <li style={{ color: 'rgba(250,246,238,0.7)', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <li style={{ color: 'rgba(250,246,238,0.7)', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <Icon.MapPin size={16} /> Chengdu | Sichuan | China
               </li>
-              <li style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+              <li style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
                 <a href="https://wa.me/8613691577871" target="_blank" rel="noopener noreferrer" title="WhatsApp" style={{
-                  width: '34px', height: '34px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '36px', height: '36px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
                   transition: 'all 0.2s ease', textDecoration: 'none',
                 }}>
                   <Icon.MessageCircle size={16} />
                 </a>
                 <a href="mailto:betty@influcity.net" title="Email" style={{
-                  width: '34px', height: '34px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '36px', height: '36px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
                   transition: 'all 0.2s ease', textDecoration: 'none',
                 }}>
@@ -9253,7 +9105,6 @@ function Footer() {
             </ul>
           </div>
         </div>
-
         {/* Bottom */}
         <div className="footer-bottom">
           <span>{f.copyright}</span>
@@ -9267,7 +9118,6 @@ function Footer() {
     </footer>
   );
 }
-
 Object.assign(window, { Footer });
 
   </script>
@@ -9675,7 +9525,6 @@ function App() {
           <MedicalChina />
           <VisaFree onNavigate={scrollTo} />
           <Testimonials />
-          <Social />
         </main>
         <Footer />
         <DigitalHumanAdvisor onNavigate={scrollTo} />
