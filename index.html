@@ -8136,6 +8136,25 @@ const Icon = {
     </svg>
   ),
 
+  Phone: ({ size = 14, className = '' }) => (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  ),
+
+  MapPin: ({ size = 14, className = '' }) => (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+  ),
+
+  MessageCircle: ({ size = 14, className = '' }) => (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
+  ),
+
   Mouse: ({ size = 20, className = '' }) => (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="6" y="2" width="12" height="20" rx="6"></rect>
@@ -8225,13 +8244,12 @@ function Navbar({ onNavigate, currentRoute }) {
     e.preventDefault();
     setMobileOpen(false);
     if (onNavigate) onNavigate(path);
-    else window.location.hash = `/${path}`;
   };
 
   const dropdownItems = {
     flights: [
-      { icon: 'Plane', title: nav.domesticRoutes, desc: nav.domesticRoutesDesc, action: go('flights') },
-      { icon: 'Globe', title: nav.globalRoutes, desc: nav.globalRoutesDesc, action: go('flights') },
+      { icon: 'Plane', title: nav.domesticRoutes, desc: nav.domesticRoutesDesc, href: '#flights' },
+      { icon: 'Globe', title: nav.globalRoutes, desc: nav.globalRoutesDesc, href: '#flights' },
     ],
     travel: [
       { icon: 'Compass', title: nav.customTours, desc: nav.customToursDesc, href: '#travel' },
@@ -8262,7 +8280,7 @@ function Navbar({ onNavigate, currentRoute }) {
     <li className="nav-item">
       <a
         className="nav-link"
-        href={routePath ? `#/${routePath}` : `#${label.toLowerCase()}`}
+        href={routePath ? `#${routePath}` : `#${label.toLowerCase()}`}
         onClick={routePath ? go(routePath) : undefined}
       >
         {label}
@@ -8273,8 +8291,8 @@ function Navbar({ onNavigate, currentRoute }) {
           <a
             key={idx}
             className="dropdown-item"
-            href={item.href || `#/${item.route || ''}`}
-            onClick={item.action || undefined}
+            href={item.href || '#'}
+            onClick={item.href ? (e) => { if (onNavigate) { e.preventDefault(); onNavigate(item.href.replace('#', '')); } } : undefined}
           >
             <div className="dropdown-item-icon">{renderIcon(item.icon)}</div>
             <div className="dropdown-item-text">
@@ -8305,10 +8323,10 @@ function Navbar({ onNavigate, currentRoute }) {
           <NavItem label={nav.shopChina} items={dropdownItems.shop} />
           <NavItem label={nav.medicalChina} items={dropdownItems.medical} />
           <li className="nav-item">
-            <a className="nav-link" href="#/visa-free" onClick={go('visa-free')}>{nav.visaFree}</a>
+            <a className="nav-link" href="#visa" onClick={go('visa')}>{nav.visaFree}</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#/blog" onClick={go('blog')}>{nav.blog}</a>
+            <a className="nav-link" href="#contact" onClick={go('contact')}>{nav.blog}</a>
           </li>
         </ul>
 
@@ -8319,7 +8337,7 @@ function Navbar({ onNavigate, currentRoute }) {
             <span className="lang-sep"></span>
             <span className={`lang-option ${lang === 'zh' ? 'active' : ''}`}>中文</span>
           </button>
-          <a href="#/planning" className="btn btn-primary btn-sm" onClick={go('planning')}>
+          <a href="#flights" className="btn btn-primary btn-sm" onClick={go('flights')}>
             {nav.startPlanning}
           </a>
           <button
@@ -8343,14 +8361,14 @@ function Navbar({ onNavigate, currentRoute }) {
 
         <div className="mobile-nav-group">
           <div className="mobile-nav-label">{nav.visaFree}</div>
-          <a className="mobile-nav-item" href="#/visa-free" onClick={go('visa-free')}>
+          <a className="mobile-nav-item" href="#visa" onClick={go('visa')}>
             <div className="mobile-nav-item-icon"><Icon.Clock size={16} /></div>
             <span>{nav.visaFree}</span>
           </a>
         </div>
         <div className="mobile-nav-group">
           <div className="mobile-nav-label">{nav.blog}</div>
-          <a className="mobile-nav-item" href="#/blog" onClick={go('blog')}>
+          <a className="mobile-nav-item" href="#contact" onClick={go('contact')}>
             <div className="mobile-nav-item-icon"><Icon.Sparkles size={16} /></div>
             <span>{nav.blog}</span>
           </a>
@@ -8360,7 +8378,7 @@ function Navbar({ onNavigate, currentRoute }) {
           <button
             className="btn btn-primary"
             style={{ flex: 1 }}
-            onClick={go('planning')}
+            onClick={go('flights')}
           >
             {nav.startPlanning}
           </button>
@@ -8379,6 +8397,11 @@ function MobileNavGroup({ label, items, onClose }) {
         const handleClick = (e) => {
           if (item.action) {
             item.action(e);
+          } else if (item.href) {
+            e.preventDefault();
+            const id = item.href.replace('#', '');
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
           if (onClose) onClose();
         };
@@ -9084,7 +9107,7 @@ function Footer() {
   const f = t.footer;
 
   return (
-    <footer className="footer">
+    <footer id="contact" className="footer">
       <div className="container">
         <div className="footer-grid">
           {/* Brand */}
@@ -9210,15 +9233,41 @@ function Footer() {
               <li><a href="#payment">Payment Methods</a></li>
             </ul>
           </div>
+          {/* Contact */}
           <div className="footer-col">
-            <h4>Contact</h4>
-            <ul>
-              <li><a href="mailto:hello@visitchina.com">hello@visitchina.com</a></li>
-              <li><a href="tel:+864001234567">+86 400 123 4567</a></li>
+            <h4>{f.contactUs}</h4>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <li>
-                <span style={{ color: 'rgba(250,246,238,0.7)', fontSize: '13px' }}>
-                  9:00 - 21:00 (GMT+8)
+                <a href="mailto:betty@influcity.net" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <Icon.Mail size={16} /> betty@influcity.net
+                </a>
+              </li>
+              <li>
+                <a href="tel:+8613691577871" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <Icon.Phone size={16} /> +86 13691577871
+                </a>
+                <span style={{ display: 'block', fontSize: '12px', color: 'rgba(250,246,238,0.45)', marginTop: '2px' }}>
+                  Phone / WhatsApp / WeChat
                 </span>
+              </li>
+              <li style={{ color: 'rgba(250,246,238,0.7)', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Icon.MapPin size={16} /> Chengdu | Sichuan | China
+              </li>
+              <li style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                <a href="https://wa.me/8613691577871" target="_blank" rel="noopener noreferrer" title="WhatsApp" style={{
+                  width: '34px', height: '34px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
+                  transition: 'all 0.2s ease', textDecoration: 'none',
+                }}>
+                  <Icon.MessageCircle size={16} />
+                </a>
+                <a href="mailto:betty@influcity.net" title="Email" style={{
+                  width: '34px', height: '34px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
+                  transition: 'all 0.2s ease', textDecoration: 'none',
+                }}>
+                  <Icon.Mail size={16} />
+                </a>
               </li>
             </ul>
           </div>
@@ -12632,53 +12681,34 @@ Object.assign(window, { BlogPage });
 
   </script>
   <script type="text/babel">
-// app.jsx — Root app component with hash-based routing
+// app.jsx — Root app component: single-page layout showing all sections
 
 function App() {
-  const { route, navigate } = useRoute();
   useScrollReveal();
 
-  const goTo = (path) => (e) => {
+  const scrollTo = (id) => (e) => {
     if (e) e.preventDefault();
-    navigate(path);
-  };
-
-  const renderPage = () => {
-    if (route === 'planning') {
-      return <StartPlanning onNavigate={navigate} />;
-    }
-    if (route === 'flights') {
-      return <FlightDealsPage />;
-    }
-    if (route === 'visa-free') {
-      return <VisaFreePage onNavigate={navigate} />;
-    }
-    if (route.startsWith('blog')) {
-      return <BlogPage onNavigate={navigate} />;
-    }
-    // Home
-    return (
-      <main>
-        <Hero onNavigate={navigate} />
-        <TrustBar />
-        <FlightDeals onNavigate={navigate} />
-        <TravelChina />
-        <ShopChina />
-        <MedicalChina />
-        <VisaFree onNavigate={navigate} />
-        <Testimonials />
-        <Social />
-      </main>
-    );
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <LanguageProvider>
       <div className="app">
-        <Navbar onNavigate={navigate} currentRoute={route} />
-        {renderPage()}
+        <Navbar onNavigate={scrollTo} currentRoute="home" />
+        <main>
+          <Hero onNavigate={scrollTo} />
+          <TrustBar />
+          <FlightDeals onNavigate={scrollTo} />
+          <TravelChina />
+          <ShopChina />
+          <MedicalChina />
+          <VisaFree onNavigate={scrollTo} />
+          <Testimonials />
+          <Social />
+        </main>
         <Footer />
-        <DigitalHumanAdvisor onNavigate={navigate} />
+        <DigitalHumanAdvisor onNavigate={scrollTo} />
       </div>
     </LanguageProvider>
   );
@@ -12686,18 +12716,6 @@ function App() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-
-// Announce upgrade capability for the host
-function announceUpgrade() {
-  window.parent.postMessage(
-    { type: 'miaoda:upgrade:available', kind: 'interactive-prototype' },
-    '*'
-  );
-}
-announceUpgrade();
-if (document.readyState !== 'complete') {
-  window.addEventListener('load', announceUpgrade, { once: true });
-}
 
   </script>
 </body>
