@@ -7137,6 +7137,31 @@ const translations = {
       title: 'Follow the China Journey',
       subtitle: 'Join our global community of travelers exploring the beauty, culture, and wonders of China. Share your adventures with #VisitChinaNow',
     },
+
+    // Contact / Message Us
+    contact: {
+      eyebrow: 'Message Us',
+      title: 'Plan Your China Journey',
+      subtitle: 'Leave a message and our travel advisor will get back to you within 24 hours. Prefer instant chat? Send it straight to WhatsApp or email below.',
+      name: 'Your Name',
+      namePh: 'e.g. John Smith',
+      email: 'Your Email',
+      emailPh: 'you@example.com',
+      message: 'Your Message',
+      messagePh: 'Tell us about your trip — dates, cities, interests...',
+      send: 'Send Message',
+      or: 'or',
+      whatsappCta: 'Send via WhatsApp',
+      emailCta: 'Send via Email',
+      direct: 'Direct Contact',
+      directDesc: 'Prefer to reach us directly? Any of these works:',
+      whatsapp: 'WhatsApp',
+      wechat: 'WeChat',
+      phone: 'Phone',
+      emailLabel: 'Email',
+      reply: 'We reply within 24 hours.',
+      success: 'Thanks! Your message is ready — choose how to send it below.',
+    },
     // Footer
     footer: {
       tagline: 'Your complete gateway to China — flights, travel, shopping, wellness and visa-free transit, all in one place.',
@@ -7675,6 +7700,31 @@ const translations = {
     // Social
     social: {
       title: '关注中国之旅',
+    },
+
+    // Contact / Message Us
+    contact: {
+      eyebrow: '在线留言',
+      title: '规划你的中国之旅',
+      subtitle: '留下您的信息，旅行顾问将在 24 小时内回复。想即时沟通？可直接通过 WhatsApp 或邮件发送给我们。',
+      name: '您的姓名',
+      namePh: '例如：张三',
+      email: '您的邮箱',
+      emailPh: 'you@example.com',
+      message: '您的留言',
+      messagePh: '告诉我们您的行程——日期、城市、兴趣……',
+      send: '发送留言',
+      or: '或',
+      whatsappCta: '通过 WhatsApp 发送',
+      emailCta: '通过邮件发送',
+      direct: '直接联系',
+      directDesc: '希望直接联系我们？以下任一方式均可：',
+      whatsapp: 'WhatsApp',
+      wechat: '微信',
+      phone: '电话',
+      emailLabel: '邮箱',
+      reply: '我们将在 24 小时内回复。',
+      success: '感谢您的留言！请选择下方发送方式：',
     },
     // Footer
     footer: {
@@ -8430,7 +8480,7 @@ function Hero({ onNavigate }) {
   const { t } = useLang();
   const h = t.hero;
 
-  const goPlanning = (e) => { e.preventDefault(); if (onNavigate) onNavigate('planning'); };
+  const goPlanning = (e) => { e.preventDefault(); if (onNavigate) onNavigate('contact'); };
   const goFlights = (e) => { e.preventDefault(); if (onNavigate) onNavigate('flights'); };
 
   return (
@@ -8448,8 +8498,8 @@ function Hero({ onNavigate }) {
         </h1>
         <p className="hero-subtitle">{h.subtitle}</p>
         <div className="hero-ctas">
-          <a href="#/planning" className="btn btn-primary btn-lg" onClick={goPlanning}>{h.primaryCta}</a>
-          <a href="#/flights" className="btn btn-outline btn-lg" onClick={goFlights}>{h.secondaryCta}</a>
+          <a href="#contact" className="btn btn-primary btn-lg" onClick={goPlanning}>{h.primaryCta}</a>
+          <a href="#flights" className="btn btn-outline btn-lg" onClick={goFlights}>{h.secondaryCta}</a>
         </div>
       </div>
 
@@ -8599,7 +8649,7 @@ function FlightDeals({ onNavigate }) {
         </div>
 
         <div className="view-all-link reveal">
-          <a href="#/flights" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('flights'); }}>
+          <a href="#flights" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('flights'); }}>
             {f.viewAll} <Icon.ArrowRight size={14} />
           </a>
         </div>
@@ -8901,7 +8951,7 @@ function VisaFree({ onNavigate }) {
               </div>
             </div>
 
-            <a href="#/visa-free" className="btn btn-gold" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('visa-free'); }}>
+            <a href="#contact" className="btn btn-gold" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('contact'); }}>
               {v.learnMore} <Icon.ArrowRight size={14} />
             </a>
           </div>
@@ -9100,6 +9150,252 @@ Object.assign(window, { Social });
 
   </script>
   <script type="text/babel">
+// ContactSection.jsx — Inline message form; sends via WhatsApp or Email
+function ContactSection() {
+  const { t, lang } = useLang();
+  const c = t.contact;
+  const [form, setForm] = React.useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = React.useState(false);
+
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  const buildText = () => {
+    const lines = [];
+    if (form.name) lines.push(`Name: ${form.name}`);
+    if (form.email) lines.push(`Email: ${form.email}`);
+    if (form.message) lines.push(`Message: ${form.message}`);
+    return lines.join('\n') || 'Hello, I would like to know more about your China travel services.';
+  };
+  const subject = lang === 'zh' ? '中国旅行咨询 - 网站留言' : 'China Travel Inquiry - Website Message';
+
+  const openWhatsApp = (e) => {
+    e.preventDefault();
+    const text = encodeURIComponent(buildText());
+    window.open(`https://wa.me/8613691577871?text=${text}`, '_blank', 'noopener');
+  };
+  const openEmail = (e) => {
+    e.preventDefault();
+    const body = encodeURIComponent(buildText());
+    window.location.href = `mailto:betty@influcity.net?subject=${encodeURIComponent(subject)}&body=${body}`;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.message) return;
+    setSent(true);
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '14px 16px',
+    borderRadius: '10px',
+    border: '1px solid rgba(26,27,28,0.15)',
+    background: '#fff',
+    fontSize: '15px',
+    fontFamily: 'inherit',
+    color: 'var(--ink)',
+    boxSizing: 'border-box',
+    outline: 'none',
+    transition: 'border-color .2s ease',
+  };
+  const labelStyle = {
+    display: 'block',
+    fontSize: '13px',
+    fontWeight: 600,
+    marginBottom: '8px',
+    color: 'var(--ink-soft)',
+    letterSpacing: '0.02em',
+  };
+  const btnBase = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    padding: '13px 24px',
+    borderRadius: '999px',
+    fontSize: '15px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    textDecoration: 'none',
+    border: 'none',
+    transition: 'all .2s ease',
+    fontFamily: 'inherit',
+  };
+
+  return (
+    <section id="contact" className="section" style={{ background: 'var(--ivory-2)' }}>
+      <div className="container">
+        <div className="section-header reveal">
+          <div className="eyebrow">{c.eyebrow}</div>
+          <h2 className="text-indigo">
+            {c.title}
+          </h2>
+          <p style={{ marginTop: '16px' }}>{c.subtitle}</p>
+          <div className="section-divider"></div>
+        </div>
+        <div style={{
+          display: 'flex', gap: '32px', flexWrap: 'wrap',
+          maxWidth: '1080px', margin: '0 auto',
+        }}>
+          {/* Form */}
+          <div className="reveal" style={{ flex: '1 1 480px', minWidth: 0 }}>
+            <form
+              onSubmit={handleSubmit}
+              style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
+            >
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1 1 200px', minWidth: 0 }}>
+                  <label style={labelStyle}>{c.name} *</label>
+                  <input
+                    style={inputStyle}
+                    placeholder={c.namePh}
+                    value={form.name}
+                    onChange={set('name')}
+                    required
+                  />
+                </div>
+                <div style={{ flex: '1 1 200px', minWidth: 0 }}>
+                  <label style={labelStyle}>{c.email}</label>
+                  <input
+                    style={inputStyle}
+                    placeholder={c.emailPh}
+                    value={form.email}
+                    onChange={set('email')}
+                    type="email"
+                  />
+                </div>
+              </div>
+              <div>
+                <label style={labelStyle}>{c.message} *</label>
+                <textarea
+                  style={{ ...inputStyle, minHeight: '120px', resize: 'vertical', lineHeight: 1.6 }}
+                  placeholder={c.messagePh}
+                  value={form.message}
+                  onChange={set('message')}
+                  required
+                />
+              </div>
+              {!sent ? (
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ alignSelf: 'flex-start' }}
+                >
+                  {c.send} <Icon.ArrowRight size={14} />
+                </button>
+              ) : (
+                <div style={{
+                  background: 'rgba(184,52,46,0.06)',
+                  border: '1px solid rgba(184,52,46,0.2)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                }}>
+                  <p style={{ margin: '0 0 16px', fontWeight: 600, color: 'var(--vermilion)' }}>
+                    {c.success}
+                  </p>
+                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                    <a
+                      href="#"
+                      onClick={openWhatsApp}
+                      style={{
+                        ...btnBase,
+                        background: '#25D366',
+                        color: '#fff',
+                        flex: '1 1 220px',
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      </svg>
+                      {c.whatsappCta}
+                    </a>
+                    <a
+                      href="#"
+                      onClick={openEmail}
+                      style={{
+                        ...btnBase,
+                        background: 'var(--vermilion)',
+                        color: '#fff',
+                        flex: '1 1 220px',
+                      }}
+                    >
+                      <Icon.Mail size={16} />
+                      {c.emailCta}
+                    </a>
+                  </div>
+                </div>
+              )}
+            </form>
+          </div>
+          {/* Direct contact card */}
+          <div className="reveal delay-1" style={{ flex: '1 1 320px', minWidth: 0 }}>
+            <div style={{
+              background: 'var(--ink)',
+              color: 'var(--ivory)',
+              borderRadius: '16px',
+              padding: '28px',
+              height: '100%',
+              boxSizing: 'border-box',
+            }}>
+              <h3 style={{ margin: '0 0 8px', color: 'var(--ivory)' }}>{c.direct}</h3>
+              <p style={{ margin: '0 0 20px', fontSize: '14px', color: 'rgba(250,246,238,0.7)' }}>
+                {c.directDesc}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <a href="https://wa.me/8613691577871" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--ivory)', textDecoration: 'none' }}>
+                  <span style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <strong style={{ display: 'block', fontSize: '15px' }}>{c.whatsapp}</strong>
+                    <span style={{ fontSize: '13px', color: 'rgba(250,246,238,0.6)' }}>+86 13691577871</span>
+                  </span>
+                </a>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#07C160', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
+                      <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.723-.098 9.318 9.318 0 002.831.438c.208 0 .411-.016.615-.032a6.144 6.144 0 01-.263-1.77c0-3.536 3.179-6.404 7.1-6.404.26 0 .516.014.768.04-1.033-3.173-4.516-5.549-8.825-5.549zm-3.04 4.756c.567 0 1.026.46 1.026 1.028 0 .567-.46 1.027-1.026 1.027a1.03 1.03 0 01-1.027-1.027c0-.568.46-1.028 1.027-1.028zm6.068 0c.567 0 1.027.46 1.027 1.028 0 .567-.46 1.027-1.027 1.027a1.03 1.03 0 01-1.027-1.027c0-.568.46-1.028 1.027-1.028zm6.089 2.064c-2.945 0-5.334 2.1-5.334 4.692 0 2.591 2.389 4.69 5.334 4.69.654 0 1.283-.1 1.873-.285a.587.587 0 01.486.057l1.273.746a.293.293 0 00.385-.08.314.314 0 00.052-.177c0-.048-.021-.098-.033-.146l-.255-.966a.59.59 0 01.14-.544A4.707 4.707 0 0024 13.7c0-2.591-2.39-4.692-5.192-4.692zm-2.385 2.873c.379 0 .686.307.686.686 0 .378-.307.685-.686.685a.687.687 0 01-.685-.685c0-.379.307-.686.685-.686zm4.77 0c.379 0 .685.307.685.686 0 .378-.306.685-.685.685a.687.687 0 01-.685-.685c0-.379.306-.686.685-.686z"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <strong style={{ display: 'block', fontSize: '15px' }}>{c.wechat}</strong>
+                    <span style={{ fontSize: '13px', color: 'rgba(250,246,238,0.6)' }}>+86 13691577871</span>
+                  </span>
+                </div>
+                <a href="tel:+8613691577871" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--ivory)', textDecoration: 'none' }}>
+                  <span style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'var(--vermilion)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Icon.Phone size={16} />
+                  </span>
+                  <span>
+                    <strong style={{ display: 'block', fontSize: '15px' }}>{c.phone}</strong>
+                    <span style={{ fontSize: '13px', color: 'rgba(250,246,238,0.6)' }}>+86 13691577871</span>
+                  </span>
+                </a>
+                <a href="mailto:betty@influcity.net" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--ivory)', textDecoration: 'none' }}>
+                  <span style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'var(--warm-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Icon.Mail size={16} />
+                  </span>
+                  <span>
+                    <strong style={{ display: 'block', fontSize: '15px' }}>{c.emailLabel}</strong>
+                    <span style={{ fontSize: '13px', color: 'rgba(250,246,238,0.6)' }}>betty@influcity.net</span>
+                  </span>
+                </a>
+              </div>
+              <p style={{ margin: '20px 0 0', fontSize: '13px', color: 'rgba(250,246,238,0.55)' }}>
+                ⏱ {c.reply}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+Object.assign(window, { ContactSection });
+
+  </script>
+  <script type="text/babel">
 // Footer.jsx — Multi-column footer with newsletter
 
 function Footer() {
@@ -9107,7 +9403,7 @@ function Footer() {
   const f = t.footer;
 
   return (
-    <footer id="contact" className="footer">
+    <footer className="footer">
       <div className="container">
         <div className="footer-grid">
           {/* Brand */}
@@ -12706,6 +13002,7 @@ function App() {
           <VisaFree onNavigate={scrollTo} />
           <Testimonials />
           <Social />
+          <ContactSection />
         </main>
         <Footer />
         <DigitalHumanAdvisor onNavigate={scrollTo} />
