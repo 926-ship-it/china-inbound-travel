@@ -6773,6 +6773,237 @@
   .footer-contact-line { justify-content: center; }
 }
 
+
+/* ===== Visual Polish ===== */
+
+/* Section spacing */
+.section {
+  padding: 96px 0;
+}
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+}
+
+/* Section header decorative line */
+.section-header {
+  position: relative;
+  margin-bottom: 56px;
+}
+.section-header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-header .eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--warm-gold);
+}
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--vermilion), var(--warm-gold));
+  border-radius: 2px;
+  margin-top: 20px;
+}
+
+/* Hero bottom gradient transition */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--ivory));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Trust bar polish */
+.trust-bar {
+  position: relative;
+  overflow: hidden;
+}
+.trust-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,97,0.5), transparent);
+}
+.trust-item {
+  text-align: center;
+  position: relative;
+}
+.trust-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 48px;
+  background: rgba(201,169,97,0.15);
+}
+@media (max-width: 768px) {
+  .trust-item:not(:last-child)::after { display: none; }
+}
+
+/* Shop card gradient overlay polish */
+.shop-card-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10,10,20,0.1) 0%,
+    rgba(10,10,20,0.3) 40%,
+    rgba(10,10,20,0.75) 100%
+  );
+}
+.shop-card {
+  overflow: hidden;
+  border-radius: 12px;
+}
+.shop-card-bg img {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.shop-card:hover .shop-card-bg img {
+  transform: scale(1.05);
+}
+
+/* Travel card polish */
+.travel-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+.travel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--vermilion), var(--warm-gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.travel-card:hover::before {
+  transform: scaleX(1);
+}
+.travel-card:hover {
+  border-color: rgba(201,169,97,0.3);
+  box-shadow: 0 12px 40px rgba(30,40,80,0.08);
+}
+.travel-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(184,52,46,0.08), rgba(201,169,97,0.12));
+  color: var(--vermilion);
+  margin-bottom: 20px;
+}
+
+/* Testimonial quote decoration */
+.testimonial-card {
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(30,40,80,0.06);
+}
+.testimonial-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 72px;
+  line-height: 1;
+  color: rgba(201,169,97,0.2);
+  pointer-events: none;
+}
+.testimonial-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Flight deal card polish */
+.flight-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.flight-card:hover {
+  box-shadow: 0 8px 32px rgba(30,40,80,0.1);
+}
+
+/* Medical card polish */
+.medical-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Visa section polish */
+.visa-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--ivory);
+  padding: 28px;
+  transition: all 0.3s ease;
+}
+.visa-card:hover {
+  border-color: rgba(201,169,97,0.3);
+  box-shadow: 0 8px 32px rgba(30,40,80,0.06);
+}
+
+/* CTA section polish */
+.footer-cta {
+  position: relative;
+  overflow: hidden;
+}
+.footer-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 40%;
+  height: 200%;
+  background: radial-gradient(ellipse, rgba(201,169,97,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.footer-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  right: -10%;
+  width: 40%;
+  height: 200%;
+  background: radial-gradient(ellipse, rgba(184,52,46,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Reveal animation polish */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 <body class="silk-bg">
@@ -8525,7 +8756,77 @@ Object.assign(window, { Hero });
 
   </script>
   <script type="text/babel">
-// TrustBar.jsx — 4 stat trust strip
+// TrustBar.jsx — 4 stat trust strip with count-up animation
+
+function useCountUp(target, duration = 2000, start = false) {
+  const [value, setValue] = React.useState(0);
+  const rafRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!start) return;
+    const startTime = performance.now();
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(target * eased);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [target, duration, start]);
+  return value;
+}
+
+function StatItem({ num, label, delay }) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Parse number and suffix
+  const parsed = React.useMemo(() => {
+    const match = num.match(/^([\d,.]+)(.*)$/);
+    if (!match) return { value: 0, suffix: num, decimals: 0 };
+    const numStr = match[1].replace(/,/g, '');
+    const value = parseFloat(numStr);
+    const decimals = (numStr.split('.')[1] || '').length;
+    return { value, suffix: match[2] || '', decimals };
+  }, [num]);
+
+  const animated = useCountUp(parsed.value, 2000, inView);
+
+  const displayNum = React.useMemo(() => {
+    if (!inView) return '0';
+    const fixed = animated.toFixed(parsed.decimals);
+    // Add thousand separators for integer part
+    const parts = fixed.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  }, [animated, inView, parsed.decimals]);
+
+  return (
+    <div ref={ref} className="trust-item reveal" style={{ transitionDelay: `${delay}s` }}>
+      <div className="trust-number">{displayNum}{parsed.suffix}</div>
+      <div className="trust-label">{label}</div>
+    </div>
+  );
+}
 
 function TrustBar() {
   const { t } = useLang();
@@ -8535,7 +8836,7 @@ function TrustBar() {
     { num: '154.5M+', label: tr.visitors },
     { num: '77', label: tr.countries },
     { num: '240h', label: tr.transit },
-    { num: '14,000+', label: tr.stores },
+    { num: '14000+', label: tr.stores },
   ];
 
   return (
@@ -8543,10 +8844,7 @@ function TrustBar() {
       <div className="container">
         <div className="trust-grid">
           {stats.map((s, i) => (
-            <div key={i} className="trust-item reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div className="trust-number">{s.num}</div>
-              <div className="trust-label">{s.label}</div>
-            </div>
+            <StatItem key={i} num={s.num} label={s.label} delay={i * 0.1} />
           ))}
         </div>
       </div>
