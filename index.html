@@ -9858,7 +9858,9 @@ function App() {
   useScrollReveal();
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
+    // Map all navigation routes to contact section (single-page site)
+    const targetId = (id === 'planning' || id === 'flights' || id === 'home' || id === 'visa' || id === 'medical') ? 'contact' : id;
+    const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
