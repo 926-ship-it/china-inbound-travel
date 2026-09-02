@@ -7004,6 +7004,157 @@
   transform: translateY(0);
 }
 
+
+/* ===== Bright & Clean Overhaul ===== */
+
+/* Trust bar: dark -> light */
+.trust-bar {
+  background: #ffffff !important;
+  padding: 56px 0 !important;
+  border-top: 1px solid #f0ece3 !important;
+  border-bottom: 1px solid #f0ece3 !important;
+}
+.trust-bar::before {
+  background: linear-gradient(90deg, transparent, rgba(184,52,46,0.2), transparent) !important;
+}
+.trust-number {
+  color: var(--vermilion) !important;
+  font-size: 44px !important;
+  font-weight: 800 !important;
+}
+.trust-label {
+  color: var(--ink-2) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+.trust-item:not(:last-child)::after {
+  background: rgba(30,42,94,0.1) !important;
+}
+
+/* Section headers: bigger & bolder */
+.section-header h2 {
+  font-size: clamp(36px, 5vw, 56px) !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  margin-bottom: 20px !important;
+}
+.section-header p {
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+  color: var(--muted) !important;
+  max-width: 640px !important;
+}
+.section-header {
+  margin-bottom: 56px !important;
+}
+.eyebrow {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  color: var(--vermilion) !important;
+  text-transform: uppercase !important;
+  margin-bottom: 16px !important;
+}
+
+/* Cards: unified white + rounded + shadow */
+.travel-card, .flight-card, .medical-card, .visa-card, .shop-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(30,42,94,0.06) !important;
+  border: 1px solid #f0ece3 !important;
+}
+.travel-card:hover, .flight-card:hover, .medical-card:hover, .visa-card:hover {
+  box-shadow: 0 8px 32px rgba(30,42,94,0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Medical section: dark -> light */
+.medical-china, .medical-section, [class*="medical"] {
+  /* don't force all, target section */
+}
+section#medical, .section.medical-section {
+  background: var(--ivory) !important;
+}
+.medical-card {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  border: 1px solid #f0ece3 !important;
+  color: var(--ink) !important;
+}
+.medical-card h3, .medical-card h4 {
+  color: var(--indigo) !important;
+}
+.medical-card p {
+  color: var(--muted) !important;
+}
+
+/* Visa section: light bg */
+section#visa, .visa-section, .visa-free {
+  background: #ffffff !important;
+}
+.visa-card {
+  background: #ffffff !important;
+}
+
+/* Testimonials: light */
+section#testimonials, .testimonials-section {
+  background: var(--ivory-2) !important;
+}
+.testimonial-card {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(30,42,94,0.06) !important;
+  border: 1px solid #f0ece3 !important;
+}
+.testimonial-card::before {
+  color: rgba(184,52,46,0.12) !important;
+  font-size: 80px !important;
+}
+
+/* Flight deals: light cards */
+.flight-card {
+  background: #ffffff !important;
+}
+.flight-price {
+  color: var(--vermilion) !important;
+  font-weight: 800 !important;
+}
+
+/* Hero: brighter overlay for readability */
+.hero-overlay {
+  background: linear-gradient(135deg, rgba(15,24,64,0.55) 0%, rgba(15,24,64,0.35) 50%, rgba(15,24,64,0.55) 100%) !important;
+}
+.hero h1 {
+  font-size: clamp(44px, 6vw, 72px) !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.3) !important;
+}
+.hero-subtitle {
+  font-size: 18px !important;
+  line-height: 1.7 !important;
+  max-width: 600px !important;
+}
+
+/* Buttons: bolder */
+.btn-primary {
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  box-shadow: 0 4px 16px rgba(184,52,46,0.3) !important;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(184,52,46,0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Section spacing */
+.section {
+  padding: 100px 0 !important;
+}
+@media (max-width: 768px) {
+  .section { padding: 64px 0 !important; }
+  .trust-bar { padding: 40px 0 !important; }
+  .trust-number { font-size: 32px !important; }
+}
+
 </style>
 </head>
 <body class="silk-bg">
