@@ -6550,6 +6550,52 @@
       .blog-article-share { flex-direction: column; align-items: flex-start; }
     }
   
+
+/* ===== Hero Dynamic Animations ===== */
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.15) translate(-1.5%, -1.5%); }
+}
+.hero-bg-anim {
+  animation: kenburns 20s ease-out infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(36px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-fade-in {
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-delay-1 { animation-delay: 0.25s; }
+.hero-delay-2 { animation-delay: 0.5s; }
+.hero-delay-3 { animation-delay: 0.75s; }
+
+/* ===== Pure info cards (no click hint) ===== */
+.travel-card, .shop-card {
+  cursor: default;
+}
+.travel-card:hover, .shop-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== Trust bar subtle number animation ===== */
+@keyframes countGlow {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 30px rgba(201,169,97,0.3); }
+}
+.trust-number {
+  animation: countGlow 4s ease-in-out infinite;
+}
+
+/* ===== Section entrance polish ===== */
+.section-header h2 {
+  letter-spacing: -0.01em;
+}
+
 </style>
 </head>
 <body class="silk-bg">
@@ -8273,18 +8319,18 @@ function Hero({ onNavigate }) {
   return (
     <section className="hero">
       <div className="hero-bg">
-        <img src={HERO_BG} alt="Ancient Chinese architecture at golden hour" />
+        <img className="hero-bg-anim" src={HERO_BG} alt="Ancient Chinese architecture at golden hour" />
       </div>
       <div className="hero-overlay"></div>
 
       <div className="hero-content">
-        <div className="hero-eyebrow">{h.eyebrow}</div>
-        <h1>
+        <div className="hero-eyebrow hero-fade-in">{h.eyebrow}</div>
+        <h1 className="hero-fade-in hero-delay-1">
           {h.title}{' '}
           {h.titleHighlight && <span className="highlight">{h.titleHighlight}</span>}
         </h1>
-        <p className="hero-subtitle">{h.subtitle}</p>
-        <div className="hero-ctas">
+        <p className="hero-subtitle hero-fade-in hero-delay-2">{h.subtitle}</p>
+        <div className="hero-ctas hero-fade-in hero-delay-3">
           <a href="#contact" className="btn btn-primary btn-lg" onClick={goPlanning}>{h.primaryCta}</a>
           <a href="#contact" className="btn btn-outline btn-lg" onClick={goFlights}>{h.secondaryCta}</a>
         </div>
@@ -8503,10 +8549,9 @@ function TravelChina() {
           {services.map((s, idx) => {
             const IconComp = Icon[s.icon];
             return (
-            <a
+            <div
               key={idx}
-              href={s.href}
-              className={`travel-card card-hover reveal ${s.featured ? 'featured' : ''}`}
+              className={`travel-card reveal ${s.featured ? 'featured' : ''}`}
               style={{ transitionDelay: `${idx * 0.08}s` }}
             >
               <div className="travel-icon">
@@ -8514,7 +8559,7 @@ function TravelChina() {
               </div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-            </a>
+            </div>
             );
           })}
         </div>
@@ -8553,7 +8598,7 @@ function ShopChina() {
 
         <div className="shop-grid">
           {/* China Shopping */}
-          <a href="#china-shopping" className="shop-card card-hover reveal">
+          <div className="shop-card reveal">
             <div className="shop-card-bg">
               <img src={SHOP_CHINA_BG} alt="Chinese traditional craft items" />
             </div>
@@ -8568,10 +8613,10 @@ function ShopChina() {
                 ))}
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Premium Deals */}
-          <a href="#premium-deals" className="shop-card card-hover reveal delay-1">
+          <div className="shop-card reveal delay-1">
             <div className="shop-card-bg">
               <img src={PREMIUM_BG} alt="Luxury shopping display" />
             </div>
@@ -8586,7 +8631,7 @@ function ShopChina() {
                 ))}
               </div>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </section>
@@ -8873,7 +8918,7 @@ Object.assign(window, { Testimonials });
 
   </script>
   <script type="text/babel">
-// Footer.jsx — Minimal footer: brand + contact + copyright
+// Footer.jsx — Minimal footer: brand + WhatsApp contact + copyright
 function Footer() {
   const { t } = useLang();
   const f = t.footer;
@@ -8883,65 +8928,60 @@ function Footer() {
         <div style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '40px',
-          alignItems: 'flex-start',
+          gap: '48px',
+          alignItems: 'center',
           justifyContent: 'space-between',
-          paddingBottom: '32px',
-          borderBottom: '1px solid rgba(201, 169, 97, 0.15)',
+          padding: '48px 0',
         }}>
           {/* Brand */}
-          <div style={{ flex: '1 1 280px', minWidth: 0 }}>
-            <h3 style={{ margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ flex: '1 1 300px', minWidth: 0 }}>
+            <h3 style={{ margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '28px' }}>
               <span style={{ color: 'var(--warm-gold-light)' }}>
-                <Icon.LogoMark size={24} />
+                <Icon.LogoMark size={28} />
               </span>
               VisitChina
             </h3>
-            <p style={{ margin: 0, fontSize: '14px', color: 'rgba(250,246,238,0.6)', lineHeight: 1.7, maxWidth: '360px' }}>
+            <p style={{ margin: 0, fontSize: '14px', color: 'rgba(250,246,238,0.55)', lineHeight: 1.8, maxWidth: '400px' }}>
               {f.tagline}
             </p>
           </div>
-          {/* Contact */}
-          <div style={{ flex: '0 0 auto', minWidth: '240px' }}>
-            <h4 style={{ margin: '0 0 16px', fontSize: '14px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--warm-gold-light)' }}>
+          {/* Contact - WhatsApp only */}
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+            <p style={{ margin: '0 0 16px', fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--warm-gold-light)' }}>
               {f.contactUs}
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <li>
-                <a href="mailto:betty@influcity.net" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--ivory)', textDecoration: 'none', fontSize: '14px' }}>
-                  <Icon.Mail size={16} /> betty@influcity.net
-                </a>
-              </li>
-              <li style={{ color: 'rgba(250,246,238,0.7)', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                <Icon.MapPin size={16} /> Chengdu | Sichuan | China
-              </li>
-              <li style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
-                <a href="https://wa.me/8613691577871" target="_blank" rel="noopener noreferrer" title="WhatsApp" style={{
-                  width: '36px', height: '36px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                  borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
-                  transition: 'all 0.2s ease', textDecoration: 'none',
-                }}>
-                  <Icon.MessageCircle size={16} />
-                </a>
-                <a href="mailto:betty@influcity.net" title="Email" style={{
-                  width: '36px', height: '36px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                  borderRadius: '50%', background: 'rgba(250,246,238,0.1)', color: 'var(--ivory)',
-                  transition: 'all 0.2s ease', textDecoration: 'none',
-                }}>
-                  <Icon.Mail size={16} />
-                </a>
-              </li>
-            </ul>
+            </p>
+            <a
+              href="https://wa.me/8613691577871"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '16px 36px',
+                borderRadius: '999px',
+                background: '#25D366',
+                color: '#fff',
+                fontSize: '16px',
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(37,211,102,0.3)',
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Chat on WhatsApp
+            </a>
+            <p style={{ margin: '14px 0 0', fontSize: '13px', color: 'rgba(250,246,238,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <Icon.MapPin size={14} /> Chengdu | Sichuan | China
+            </p>
           </div>
         </div>
         {/* Bottom */}
         <div className="footer-bottom">
           <span>{f.copyright}</span>
-          <div className="footer-bottom-links">
-            <a href="#privacy">{f.privacy}</a>
-            <a href="#terms">{f.terms}</a>
-            <a href="#cookies">{f.cookies}</a>
-          </div>
         </div>
       </div>
     </footer>
